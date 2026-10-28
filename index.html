@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Two practical HTML snippets for Canvas teachers. Preview, personalise and copy responsive profile cards and a Panopto video embed.">
+  <meta name="description" content="Practical HTML snippets for Canvas educators. Preview, personalise and copy profile cards, a Panopto viewer and nested accordions.">
   <title>Canvas snippets — a small toolkit for Canvas educators</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23235047'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='38' fill='white'%3E%26lt%3B/%3E%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
@@ -18,12 +18,13 @@
 <main id="main" class="shell">
   <section class="hero" aria-labelledby="page-title">
     <h1 id="page-title" class="toolkit-title"><span class="small-dot" aria-hidden="true"></span> A SMALL TOOLKIT FOR CANVAS EDUCATORS</h1>
-    <p class="hero-intro">A little HTML goes a long way. Explore two useful layouts, make them your own, and copy them straight into Canvas. No coding experience needed.</p>
+    <p class="hero-intro">A little HTML goes a long way. Explore three useful examples, make them your own, and copy them straight into Canvas. No coding experience needed.</p>
     <nav class="snippet-nav" aria-label="Choose a snippet">
       <a href="#profiles" class="jump-card"><span class="jump-symbol" aria-hidden="true">▤</span><span><strong>Flexbox profile cards</strong><small>Introduce your teaching team</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
       <a href="#panopto" class="jump-card"><span class="jump-symbol" aria-hidden="true">▷</span><span><strong>Panopto viewer</strong><small>Keep video contents within reach</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
+      <a href="#accordions" class="jump-card"><span class="jump-symbol" aria-hidden="true">≡</span><span><strong>Accordions</strong><small>Organise expandable sections</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
     </nav>
-    <div class="hero-meta"><span>02 ready-to-adapt snippets</span><span>Responsive layouts</span><span>Plain HTML + inline styles</span></div>
+    <div class="hero-meta"><span>03 ready-to-adapt snippets</span><span>Responsive layouts</span><span>Plain HTML + inline styles</span></div>
   </section>
 
   <section id="how-to" class="starter" aria-labelledby="starter-title">
@@ -38,14 +39,14 @@
       <div class="example-panel">
         <div class="panel-bar"><span class="eyebrow">LIVE EXAMPLE</span><div class="segmented" role="group" aria-label="Profile preview width"><button type="button" class="selected" data-width="wide" aria-pressed="true">Wide</button><button type="button" data-width="narrow" aria-pressed="false">Narrow</button></div></div>
         <div class="preview-stage"><div id="profile-preview" class="profile-preview"></div></div>
-        <p class="preview-caption">Try “Narrow” to see the same HTML wrap. The initials image is a sample photo placeholder.</p>
+        <p class="preview-caption">Try “Narrow” to see the same HTML wrap. Alex’s example photo is included. Clear the photo URL to use initials instead.</p>
       </div>
       <div class="edit-panel"><span class="eyebrow">MAKE IT YOURS</span><h3>A quick introduction.</h3><p>Try changing these fields. The preview and HTML update together.</p>
         <form id="profile-form"><label for="profile-name">Name and pronouns</label><input id="profile-name" value="Alex Morgan (they/them)" maxlength="140">
           <label for="profile-role">Introduction</label><textarea id="profile-role" rows="3" maxlength="2000">Alex teaches on the course and helps students turn new ideas into practical skills. Ask them about weekly activities, coursework or getting started.</textarea>
           <label for="profile-email">Contact email</label><input type="email" id="profile-email" value="alex@example.com">
-          <label for="profile-image">Photo URL <span class="optional">(optional)</span></label><input type="url" id="profile-image" placeholder="https://…" aria-describedby="image-help"><small id="image-help">Leave blank for initials. In Canvas, use a course image students can access.</small>
-          <label for="profile-alt">Photo description</label><input id="profile-alt" value="Portrait of Alex Morgan" aria-describedby="alt-help"><small id="alt-help">When adding a photo, describe it briefly for people using a screen reader.</small>
+          <label for="profile-image">Photo URL <span class="optional">(optional)</span></label><input type="url" id="profile-image" value="https://ifm2.github.io/snippets-examples/assets/alex-example.png" placeholder="https://…" aria-describedby="image-help"><small id="image-help">Leave blank for initials. In Canvas, use a course image students can access.</small>
+          <label for="profile-alt">Photo description</label><input id="profile-alt" value="Alex smiling, with short dark wavy hair and a dark green jumper." aria-describedby="alt-help"><small id="alt-help">When adding a photo, describe it briefly for people using a screen reader.</small>
           <p class="field-error" id="profile-error" role="status"></p>
         </form>
       </div>
@@ -87,6 +88,39 @@
     <a class="back-top" href="#top">Back to snippets ↑</a>
   </section>
 
+  <section id="accordions" class="snippet-section" aria-labelledby="accordions-title">
+    <div class="section-heading"><div class="section-number">03</div><div><span class="eyebrow">CONTENT & STRUCTURE</span><h2 id="accordions-title">Accordions</h2><p>Let students expand the sections they need. Keep it simple, or place one or more sub-accordions inside the main section.</p></div><span class="pill">Native HTML controls</span></div>
+    <div class="workspace accordion-workspace">
+      <div class="example-panel"><div class="panel-bar"><span class="eyebrow">LIVE EXAMPLE</span><span class="preview-tag" id="accordion-count">2 sub-accordions</span></div>
+        <div class="accordion-stage"><div id="accordion-preview"></div></div>
+        <p class="preview-caption">Click a heading to expand or collapse it. With a keyboard, Tab to a heading and press Enter or Space. Sub-accordions open independently.</p>
+      </div>
+      <div class="edit-panel"><span class="eyebrow">MAKE IT YOURS</span><h3>Build your sections.</h3><p>Try a starting structure, then edit its text. Adding or removing sub-accordions updates the preview and HTML.</p>
+        <div class="accordion-presets" role="group" aria-label="Example accordion structures"><button type="button" data-accordion-preset="0">None</button><button type="button" data-accordion-preset="1">One</button><button type="button" data-accordion-preset="2">Several</button></div>
+        <form id="accordion-form">
+          <label for="accordion-heading">Main accordion heading</label><input id="accordion-heading" value="Course resources" maxlength="180">
+          <label for="accordion-body">Main content</label><textarea id="accordion-body" rows="3" maxlength="6000">Use these resources to prepare for the session and review what you have learned.</textarea>
+          <label class="option-row"><input type="checkbox" id="accordion-open"><span>Start with the main accordion expanded<small>Adds the <code>open</code> attribute. Leave unticked to start collapsed, as in the University example.</small></span></label>
+          <div class="subsection-label">Sub-accordions</div><div id="accordion-children"></div>
+          <button type="button" class="primary-button" id="add-sub-accordion">Add sub-accordion <span aria-hidden="true">+</span></button>
+          <p class="builder-status" id="accordion-status" role="status"></p>
+          <details class="advanced-options" id="accordion-advanced"><summary>Advanced options: spacing & colours</summary>
+            <p>Mix text and background colours and adjust padding below. Every change updates the preview and copied HTML. These settings apply to all sub-accordions.</p>
+            <div id="accordion-style-controls"></div>
+            <p class="contrast-guidance"><strong>Check accessibility when changing colours.</strong> The results use normal-text thresholds: AA requires 4.5:1 and AAA requires 7:1. Passing these colour checks does not establish overall WCAG conformance. Canvas theme styles can change the final appearance, so check your saved course page too.</p>
+            <p><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">WCAG AA text contrast</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html">WCAG AAA text contrast</a></p>
+            <p>Ratios are displayed to three decimal places; pass/fail uses the unrounded result. Colours are opaque. If you inherit a text colour, the check uses the colour in this preview.</p>
+            <button type="button" class="text-button reset-accordion-style" id="reset-accordion-style">Restore University spacing and colours</button>
+          </details>
+          <p id="accordion-style-error" class="field-error" role="status"></p>
+          <p id="accordion-contrast-summary" class="contrast-summary" role="status" aria-live="polite" aria-atomic="true"></p>
+        </form>
+      </div>
+    </div>
+    <div class="code-panel"><div class="code-bar"><span><strong>Your snippet</strong><small>HTML · ready for Canvas</small></span><button type="button" class="copy-button" data-copy="accordion-code">Copy HTML <span aria-hidden="true">⧉</span></button></div><pre tabindex="0" aria-label="Accordion HTML"><code id="accordion-code"></code></pre></div>
+    <div class="guidance-grid"><div><h3>What to change in the HTML</h3><ul><li><code>&lt;details&gt;</code> holds one expandable section. Its <code>&lt;summary&gt;</code> is the heading students click.</li><li>Replace the words inside <code>&lt;summary&gt;</code> and the paragraph text inside <code>&lt;p&gt;</code>. Keep the tags around them.</li><li>A sub-accordion is another complete <code>&lt;details&gt;…&lt;/details&gt;</code> block inside the outer section’s content. Add as many as you need, or remove every inner block for a simple accordion.</li><li>The generator treats your text as plain text. Leave a blank line to start another paragraph. After pasting into Canvas, use the visual editor to add links, images or lists.</li></ul></div><div><h3>Keep the structure clear</h3><p>Use short, descriptive headings. Keep the most important instructions visible on the page, and use accordions for supporting information. Too many levels can make content hard to find; this builder uses one level of sub-accordions.</p><p>The <code>open</code> attribute starts a section expanded. Remove the attribute to start collapsed: <code>open="false"</code> still opens it.</p><div class="tip"><strong>University defaults, with optional changes</strong><p>The snippet retains <code>fossa fossa-r</code>. By default, the main heading uses <code>0.8em</code> padding; main content and sub-accordions use <code>0.5em</code>. There are no added borders, margins, sub-heading padding or inner content wrappers. Text colour inherits from the surrounding page. Extra styling from <code>fossa</code> depends on your University’s CSS.</p></div></div></div>
+    <a class="back-top" href="#top">Back to snippets ↑</a>
+  </section>
   <noscript><p class="tip">Enable JavaScript to generate previews and copyable snippets. The editing guidance is still available above.</p></noscript>
 </main>
 <footer class="shell site-footer"><span>Canvas snippets<span class="brand-dot">.</span> <span class="footer-sub">A small toolkit for better teaching pages.</span></span><a href="https://community.instructure.com/en/kb/articles/662912-how-do-i-use-the-html-view-in-the-rich-content-editor">Canvas HTML help ↗</a><span class="independent">Independent resource. Not affiliated with Instructure or Panopto.</span></footer>

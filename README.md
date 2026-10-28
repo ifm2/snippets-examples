@@ -1,6 +1,6 @@
 # Canvas snippets
 
-A static, single-page teaching resource with responsive flexbox profile cards and a Panopto embed template. Designed for teachers who are new to HTML.
+A static, single-page teaching resource with responsive flexbox profile cards, a Panopto embed template and nested accordions. Designed for teachers who are new to HTML.
 
 ## Preview locally
 
@@ -30,13 +30,15 @@ To update the site, edit or upload these same files in the repository and commit
 ## What is included
 
 - Anchor links at the top of the page.
+- An accordion builder with zero, one or multiple sub-accordions; editable headings and paragraphs; add/remove controls; independent expand/collapse behaviour; and copyable inline-styled HTML.
+- University accordion defaults, with expandable text/background colour mixers and padding controls for headings, content and sub-accordions. Live contrast checks show normal-text WCAG AA (4.5:1) and AAA (7:1) results. Warnings allow copying; pass/fail uses the unrounded ratio.
 - A profile customiser with a wide/narrow preview, optional HTTPS photo and email, and generated HTML.
 - A real Panopto example recording, plus a customiser for previewing and copying your own video embed.
 - Expandable advanced options for captions, interactivity, fullscreen, title, branding, the player’s viewer link and autoplay. Changes update both the preview and copied HTML; Reset example restores all original defaults.
 - Copy buttons, readable HTML, plain-language editing guidance and Canvas installation steps.
 - Keyboard focus indicators, a skip link, semantic headings, responsive layouts and reduced-motion support.
 
-Profile content is generic. The Panopto example uses the recording supplied for this website: https://ox.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769. Form values are kept in memory and reset when the page reloads. Entering a photo loads that remote image; viewing the video section contacts the Oxford Panopto server. There are no analytics or storage cookies in this site's own code.
+Profile content is generic. The example portrait is the supplied assets/alex-example.png, with an editable description. The local preview uses the bundled file; the copied HTML uses its intended public GitHub Pages URL. Before this draft is published, upload the image to Canvas and replace that URL if testing the copied profile there. The Panopto example uses the recording supplied for this website: https://ox.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769. Form values are kept in memory and reset when the page reloads. Entering a photo loads that remote image; viewing the video section contacts the Oxford Panopto server. There are no analytics or storage cookies in this site's own code.
 
 ## Panopto limitations and validation
 
@@ -57,5 +59,6 @@ Sources for the teaching guidance:
 - `styles.css`: website presentation; these styles are not copied into Canvas.
 - `script.js`: generates self-contained HTML, handles previews and clipboard interaction.
 - `.nojekyll`: tells GitHub Pages to serve the static files directly.
+- `assets/alex-example.png`: supplied example portrait.
 
 To add another snippet later, add a section, a top navigation link and a separate generator/copy target. Keep sample content generic and escape user-entered text before generating HTML.

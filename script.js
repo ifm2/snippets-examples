@@ -3,6 +3,7 @@
 const byId = (id) => document.getElementById(id);
 const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
 const valueOf = (id, fallback = '') => byId(id).value.trim() || fallback;
+const examplePhotoURL = 'https://ifm2.github.io/snippets-examples/assets/alex-example.png';
 let toastTimer;
 
 function notify(message) {
@@ -45,6 +46,7 @@ function updateProfile() {
   </div>
 </div>`;
   byId('profile-preview').innerHTML = html;
+  if (photo === examplePhotoURL) byId('profile-preview').querySelector('img').src = new URL('assets/alex-example.png', document.baseURI).href;
   byId('profile-code').textContent = html;
 }
 
@@ -199,3 +201,203 @@ document.querySelectorAll('[data-copy]').forEach((button) => {
 
 updateProfile();
 resetVideo();
+
+// Each child is a sibling disclosure nested inside the main disclosure.
+let nextAccordionId = 1;
+let accordionChildren = [];
+const accordionSamples = [
+  { title: 'Before the session', body: 'Read the introduction and make a note of one question you would like to discuss.' },
+  { title: 'Further reading', body: 'Review the worked examples after the session. Try applying one idea to a question of your own.' }
+];
+
+function accordionParagraphs(text, indent) {
+  return text.trim().split(/\n\s*\n/).filter(Boolean).map((paragraph) =>
+    `${indent}<p>${escapeHTML(paragraph.trim()).replace(/\n/g, '<br>')}</p>`
+  ).join('\n');
+}
+
+const accordionStyleAreas = [
+  { key: 'heading', label: 'Main heading', background: '#d0e7f2', padding: '0.8' },
+  { key: 'content', label: 'Main content', background: '#efefef', padding: '0.5' },
+  { key: 'sub', label: 'Sub-accordions', background: '#ffffff', padding: '0.5' }
+];
+
+function renderAccordionStyleControls() {
+  byId('accordion-style-controls').innerHTML = accordionStyleAreas.map((area) => `
+    <fieldset class="accordion-style-area"><legend>${area.label}</legend>
+      <label for="acc-${area.key}-bg">Background colour</label>
+      <div class="colour-inputs"><input type="color" id="acc-${area.key}-bg" value="${area.background}" data-colour-picker="acc-${area.key}-bg-hex" aria-label="${area.label} background colour picker"><input type="text" id="acc-${area.key}-bg-hex" value="${area.background}" data-colour-hex="acc-${area.key}-bg" aria-label="${area.label} background hex colour" maxlength="7" spellcheck="false"></div>
+      <label for="acc-${area.key}-text">Text colour</label>
+      <div class="colour-inputs"><input type="color" id="acc-${area.key}-text" value="#203c36" data-colour-picker="acc-${area.key}-text-hex" data-area="${area.key}" aria-label="${area.label} text colour picker"><input type="text" id="acc-${area.key}-text-hex" value="#203c36" data-colour-hex="acc-${area.key}-text" data-area="${area.key}" aria-label="${area.label} text hex colour" maxlength="7" spellcheck="false"></div>
+      <label class="option-row"><input type="checkbox" id="acc-${area.key}-inherit" checked><span>Inherit surrounding text colour<small>University default. Choosing a text colour switches this off.</small></span></label>
+      <label for="acc-${area.key}-padding">Padding <output id="acc-${area.key}-padding-value" for="acc-${area.key}-padding">${area.padding}em</output></label>
+      <input type="range" id="acc-${area.key}-padding" value="${area.padding}" min="0" max="3" step="0.1" aria-label="${area.label} padding in em">
+      <div class="colour-sample" id="acc-${area.key}-sample">${area.label} — sample text</div>
+      <p class="contrast-result" id="acc-${area.key}-contrast"></p>
+    </fieldset>`).join('');
+}
+
+function accordionAreaStyle(key) {
+  return {
+    background: byId(`acc-${key}-bg`).value,
+    text: byId(`acc-${key}-inherit`).checked ? '' : byId(`acc-${key}-text`).value,
+    padding: `${Number(byId(`acc-${key}-padding`).value)}em`
+  };
+}
+
+function relativeLuminance(hex) {
+  const channels = hex.slice(1).match(/../g).map((channel) => parseInt(channel, 16) / 255)
+    .map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+  return channels[0] * 0.2126 + channels[1] * 0.7152 + channels[2] * 0.0722;
+}
+
+function contrastRatio(first, second) {
+  const firstLuminance = relativeLuminance(first);
+  const secondLuminance = relativeLuminance(second);
+  return (Math.max(firstLuminance, secondLuminance) + 0.05) / (Math.min(firstLuminance, secondLuminance) + 0.05);
+}
+
+function computedHex(element) {
+  const channels = getComputedStyle(element).color.match(/[\d.]+/g).slice(0, 3);
+  return '#' + channels.map((channel) => Math.round(Number(channel)).toString(16).padStart(2, '0')).join('');
+}
+
+function updateAccordionContrast() {
+  const root = byId('accordion-preview').querySelector('details');
+  const elements = { heading: root.querySelector('summary'), content: root.querySelector('div'), sub: root.querySelector('details') || root.querySelector('div') };
+  const aaFailures = [], aaaFailures = [];
+  accordionStyleAreas.forEach((area) => {
+    const style = accordionAreaStyle(area.key);
+    const text = style.text || computedHex(elements[area.key]);
+    if (!style.text) {
+      byId(`acc-${area.key}-text`).value = text;
+      const hexField = byId(`acc-${area.key}-text-hex`);
+      if (hexField.getAttribute('aria-invalid') !== 'true') hexField.value = text;
+    }
+    const ratio = contrastRatio(text, style.background);
+    const aa = ratio >= 4.5, aaa = ratio >= 7;
+    const sample = byId(`acc-${area.key}-sample`);
+    sample.style.backgroundColor = style.background;
+    sample.style.color = text;
+    const result = byId(`acc-${area.key}-contrast`);
+    result.textContent = `${ratio.toFixed(3)}:1 · AA ${aa ? 'PASS' : 'FAIL'} (4.5:1) · AAA ${aaa ? 'PASS' : 'FAIL'} (7:1)`;
+    result.classList.toggle('contrast-fail', !aa);
+    result.classList.toggle('contrast-aaa', aa && !aaa);
+    if (!aa) aaFailures.push(area.label);
+    if (!aaa) aaaFailures.push(area.label);
+    byId(`acc-${area.key}-padding-value`).textContent = style.padding;
+  });
+  const summary = byId('accordion-contrast-summary');
+  summary.textContent = aaFailures.length ? `Warning: ${aaFailures.join(', ')} ${aaFailures.length === 1 ? 'has' : 'have'} text contrast below WCAG AA (4.5:1), and also below AAA (7:1). Choose a stronger text/background contrast. Copying remains available.` : aaaFailures.length ? `AAA contrast warning: ${aaaFailures.join(', ')} ${aaaFailures.length === 1 ? 'does' : 'do'} not meet AAA (7:1). All three colour pairs still meet AA text contrast (4.5:1). Copying remains available.` : 'All three colour pairs meet AA and AAA text contrast for normal-sized text in this preview.';
+  summary.classList.toggle('contrast-fail', aaFailures.length > 0);
+  summary.classList.toggle('contrast-aaa', aaFailures.length === 0 && aaaFailures.length > 0);
+}
+
+function updateAccordion(preserveOpen = false) {
+  const expanded = preserveOpen ? Array.from(byId('accordion-preview').querySelectorAll('details'), (item) => item.open) : [];
+  const title = escapeHTML(valueOf('accordion-heading', 'Section heading'));
+  const mainOpen = byId('accordion-open').checked ? ' open' : '';
+  const heading = accordionAreaStyle('heading'), content = accordionAreaStyle('content'), sub = accordionAreaStyle('sub');
+  const textStyle = (area) => area.text ? ` color: ${area.text};` : '';
+  const paragraphs = accordionParagraphs(byId('accordion-body').value, '    ');
+  const children = accordionChildren.map((child) => {
+    const body = accordionParagraphs(child.body, '      ');
+    return `    <details style="background-color: ${sub.background};${textStyle(sub)} padding: ${sub.padding};"${child.open ? ' open' : ''}>
+      <summary><strong>${escapeHTML(child.title.trim() || 'Sub-accordion heading')}</strong></summary>
+${body}
+    </details>`;
+  }).join('\n');
+  const html = `<details class="fossa fossa-r"${mainOpen}>
+  <summary style="background-color: ${heading.background};${textStyle(heading)} padding: ${heading.padding}; cursor: pointer;"><strong>${title}</strong></summary>
+  <div style="background-color: ${content.background};${textStyle(content)} padding: ${content.padding};">
+${[paragraphs, children].filter(Boolean).join('\n')}
+  </div>
+</details>`;
+  byId('accordion-code').textContent = html;
+  byId('accordion-preview').innerHTML = html;
+  if (preserveOpen) byId('accordion-preview').querySelectorAll('details').forEach((item, index) => { item.open = expanded[index] || false; });
+  byId('accordion-count').textContent = `${accordionChildren.length} sub-accordion${accordionChildren.length === 1 ? '' : 's'}`;
+  updateAccordionContrast();
+}
+
+function renderAccordionEditors() {
+  byId('accordion-children').innerHTML = accordionChildren.length ? accordionChildren.map((child, index) => `
+    <fieldset class="sub-accordion-editor" data-child-id="${child.id}">
+      <legend>Sub-accordion ${index + 1}</legend>
+      <label for="sub-heading-${child.id}">Heading</label>
+      <input id="sub-heading-${child.id}" data-child-field="title" value="${escapeHTML(child.title)}" maxlength="180">
+      <label for="sub-body-${child.id}">Content</label>
+      <textarea id="sub-body-${child.id}" data-child-field="body" rows="3" maxlength="6000">${escapeHTML(child.body)}</textarea>
+      <label class="option-row"><input type="checkbox" data-child-field="open"${child.open ? ' checked' : ''}><span>Start this sub-accordion expanded</span></label>
+      <button type="button" class="text-button remove-sub" data-remove-child="${child.id}" aria-label="Remove sub-accordion ${index + 1}">Remove sub-accordion</button>
+    </fieldset>`).join('') : '<p class="empty-sub-accordions">No sub-accordions. Add one below, or copy this simple accordion as it is.</p>';
+  updateAccordion();
+}
+
+function addAccordionChild(sample) {
+  accordionChildren.push({ id: nextAccordionId++, title: sample?.title || 'Another resource', body: sample?.body || 'Add the information students need for this section.', open: false });
+}
+
+byId('accordion-form').addEventListener('submit', (event) => event.preventDefault());
+byId('accordion-form').addEventListener('input', (event) => {
+  const input = event.target;
+  if (input.dataset.colourHex) {
+    const valid = /^#[a-f\d]{6}$/i.test(input.value);
+    input.setAttribute('aria-invalid', String(!valid));
+    if (valid) {
+      byId(input.dataset.colourHex).value = input.value;
+      if (input.dataset.area) byId(`acc-${input.dataset.area}-inherit`).checked = false;
+    }
+  }
+  if (input.dataset.colourPicker) {
+    const hexField = byId(input.dataset.colourPicker);
+    hexField.value = input.value;
+    hexField.setAttribute('aria-invalid', 'false');
+    if (input.dataset.area) byId(`acc-${input.dataset.area}-inherit`).checked = false;
+  }
+  byId('accordion-style-error').textContent = byId('accordion-style-controls').querySelector('[aria-invalid="true"]') ? 'Enter a six-digit hex colour such as #d0e7f2. The preview and HTML keep the last valid colour while you edit.' : '';
+  const field = event.target.dataset.childField;
+  if (field) {
+    const id = Number(event.target.closest('[data-child-id]').dataset.childId);
+    const child = accordionChildren.find((item) => item.id === id);
+    child[field] = field === 'open' ? event.target.checked : event.target.value;
+  }
+  updateAccordion(Boolean(input.closest('#accordion-style-controls')));
+});
+
+byId('add-sub-accordion').addEventListener('click', () => {
+  addAccordionChild();
+  renderAccordionEditors();
+  byId(`sub-heading-${accordionChildren.at(-1).id}`).focus();
+  byId('accordion-status').textContent = `Sub-accordion added. ${accordionChildren.length} in total.`;
+});
+
+byId('accordion-children').addEventListener('click', (event) => {
+  const button = event.target.closest('[data-remove-child]');
+  if (!button) return;
+  accordionChildren = accordionChildren.filter((item) => item.id !== Number(button.dataset.removeChild));
+  renderAccordionEditors();
+  byId('add-sub-accordion').focus();
+  byId('accordion-status').textContent = `Sub-accordion removed. ${accordionChildren.length} remaining.`;
+});
+
+document.querySelectorAll('[data-accordion-preset]').forEach((button) => {
+  button.addEventListener('click', () => {
+    accordionChildren = [];
+    for (let index = 0; index < Number(button.dataset.accordionPreset); index++) addAccordionChild(accordionSamples[index]);
+    renderAccordionEditors();
+    byId('accordion-status').textContent = `Example loaded: ${accordionChildren.length} sub-accordion${accordionChildren.length === 1 ? '' : 's'}.`;
+  });
+});
+
+byId('reset-accordion-style').addEventListener('click', () => {
+  renderAccordionStyleControls();
+  byId('accordion-style-error').textContent = '';
+  updateAccordion(true);
+  byId('accordion-status').textContent = 'University spacing and colours restored. Your content is unchanged.';
+});
+
+renderAccordionStyleControls();
+accordionSamples.forEach(addAccordionChild);
+renderAccordionEditors();
+byId('accordion-advanced').open = false;
