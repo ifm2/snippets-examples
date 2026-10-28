@@ -340,7 +340,7 @@ function renderAccordionEditors() {
 }
 
 function addAccordionChild(sample) {
-  accordionChildren.push({ id: nextAccordionId++, title: sample?.title || 'Another resource', body: sample?.body || 'Add the information students need for this section.', open: false });
+  accordionChildren.push({ id: nextAccordionId++, title: sample?.title || 'Another resource', body: sample?.body || 'Add the information students need for this section.', open: sample?.open ?? false });
 }
 
 byId('accordion-form').addEventListener('submit', (event) => event.preventDefault());
@@ -409,6 +409,6 @@ byId('reset-accordion-style').addEventListener('click', () => {
 });
 
 renderAccordionStyleControls();
-addAccordionChild(accordionSamples[0]);
+addAccordionChild({ ...accordionSamples[0], open: true });
 renderAccordionEditors();
 byId('accordion-advanced').open = false;

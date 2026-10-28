@@ -1,64 +1,52 @@
 # Canvas snippets
 
-A static, single-page teaching resource with responsive flexbox profile cards, a Panopto embed template and nested accordions. Designed for teachers who are new to HTML.
+[Canvas snippets](https://ifm2.github.io/snippets-examples/) is a small, interactive toolkit for Canvas educators with no HTML experience. Teachers can explore visual examples, personalise their content and copy ready-to-use HTML into a Canvas page.
 
-## Preview locally
+## The toolkit
 
-Open `index.html` in a browser. For clipboard access and a local web preview, run this from the project folder:
+- **Flexbox profile cards:** introduce a teaching team with a photo, description and contact email. Wide and narrow previews show how the layout wraps on smaller screens.
+- **Panopto viewer:** embed a recording with a full-viewer link. Advanced options control captions, contents and interactivity, fullscreen, title, branding and autoplay.
+- **Accordions:** build a main section with none, one or several sub-accordions. Edit headings and paragraphs, add or remove sections, and change padding and text/background colours.
+
+The accordion example starts with one sub-accordion. Both the main section and that sub-accordion start expanded so their contents are visible. Advanced Options starts closed. Choosing a smaller structure temporarily hides sections; choosing a larger structure restores their edited text during the current page session.
+
+Each builder updates its preview and copyable HTML together. The generated snippets use inline styles so they can be pasted into Canvas's HTML editor. The page also includes guidance on editing tags, adding course images and checking the saved result.
+
+## Accessibility and Canvas compatibility
+
+The site includes keyboard focus indicators, a skip link, semantic headings, responsive layouts and reduced-motion support. Photo descriptions are editable, and accordion headings use native HTML disclosure controls.
+
+The accordion colour mixer calculates contrast for normal-sized text and shows AA (4.5:1) and AAA (7:1) results. Low contrast produces a warning without blocking copying. Displayed ratios are rounded to three decimal places; pass/fail uses the unrounded value. Inherited text colours are measured in the website preview. These checks cover text contrast, rather than overall accessibility; always check the saved Canvas page too.
+
+Accordion HTML retains the University's `fossa fossa-r` classes. Default padding is 0.8em for the main heading and 0.5em for main content and sub-accordions, with no added borders or sub-heading padding. Canvas themes and institution-specific HTML rules can change the result, including preventing accordions from starting expanded.
+
+Panopto settings request existing captions and interactive features; they do not create captions or chapters. Videos restricted to a Canvas course may not load on this website even when they work for authorised students in Canvas. Check sharing permissions, caption accuracy and the saved page in Student View.
+
+## Content and privacy
+
+Profile content is generic. The supplied example portrait is stored in `assets/alex-example.png`; copied profile HTML uses its public website URL. For teaching, upload your own photo to Canvas and use an image address students can access.
+
+Form edits are held in memory and reset when the page reloads. The site's own code uses no analytics or storage cookies. Loading a remote photo contacts its host, and viewing a video contacts its Panopto server. The example recording is hosted by Oxford Panopto.
+
+## Developer file guide
+
+This is a static website with no build step, package dependencies, external fonts or external scripts.
+
+| File | Purpose |
+| --- | --- |
+| `index.html` | Page structure, explanatory text, forms and initial settings. |
+| `styles.css` | Website layout, responsive presentation and interaction styles; these styles are not copied into Canvas. |
+| `script.js` | Snippet generation, live previews, form handling, contrast calculations and copying. |
+| `assets/alex-example.png` | Supplied example portrait. |
+| `.nojekyll` | Keeps static files served directly by GitHub Pages. |
+| `.gitignore` | Excludes local preview screenshots, archives and unrelated source material. |
+
+Open `index.html` directly for a basic preview. For local HTTP and clipboard support, run this from the project folder:
 
 ```powershell
 python -m http.server 8000 --bind 127.0.0.1
 ```
 
-Then visit http://127.0.0.1:8000. No build tools, packages, fonts, or external scripts are required. The clipboard button selects the code for manual copying when clipboard access is unavailable.
+Then visit [the local preview](http://127.0.0.1:8000/). When clipboard access is unavailable, the copy button selects the code for manual copying.
 
-## Publish on GitHub Pages (no terminal needed)
-
-1. Sign in to GitHub and create a **public** repository named `snippets-examples`. Leave the initial README, licence and gitignore options unticked because this folder already contains the site files.
-2. On the repository page, choose **uploading an existing file** (or **Add file → Upload files**). Upload `index.html`, `styles.css`, `script.js`, `.nojekyll`, and this `README.md` into the root of the repository. Commit the upload to `main`.
-3. Open **Settings → Pages**. Under **Build and deployment**, select **Deploy from a branch**.
-4. Choose **main** and **/(root)**, then **Save**.
-5. Wait for the Pages deployment to finish. GitHub displays the live link in Settings → Pages: `https://YOUR-USERNAME.github.io/snippets-examples/`.
-6. Check that both previews, the jump links, the narrow profile view and copy buttons work on that live URL.
-
-Reference: [GitHub’s publishing-source instructions](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site).
-
-For the exact root address `https://YOUR-USERNAME.github.io/`, name the repository `YOUR-USERNAME.github.io` instead. You can only have one user site per account; `snippets-examples` is a separate project site.
-
-To update the site, edit or upload these same files in the repository and commit the changes. Pages will publish the update. No server or paid hosting is needed for a public repository.
-
-## What is included
-
-- Anchor links at the top of the page.
-- An accordion builder with zero, one or multiple sub-accordions; editable headings and paragraphs; add/remove controls; independent expand/collapse behaviour; and copyable inline-styled HTML.
-- University accordion defaults, with expandable text/background colour mixers and padding controls for headings, content and sub-accordions. Live contrast checks show normal-text WCAG AA (4.5:1) and AAA (7:1) results. Warnings allow copying; pass/fail uses the unrounded ratio.
-- A profile customiser with a wide/narrow preview, optional HTTPS photo and email, and generated HTML.
-- A real Panopto example recording, plus a customiser for previewing and copying your own video embed.
-- Expandable advanced options for captions, interactivity, fullscreen, title, branding, the player’s viewer link and autoplay. Changes update both the preview and copied HTML; Reset example restores all original defaults.
-- Copy buttons, readable HTML, plain-language editing guidance and Canvas installation steps.
-- Keyboard focus indicators, a skip link, semantic headings, responsive layouts and reduced-motion support.
-
-Profile content is generic. The example portrait is the supplied assets/alex-example.png, with an editable description. The local preview uses the bundled file; the copied HTML uses its intended public GitHub Pages URL. Before this draft is published, upload the image to Canvas and replace that URL if testing the copied profile there. The Panopto example uses the recording supplied for this website: https://ox.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769. Form values are kept in memory and reset when the page reloads. Entering a photo loads that remote image; viewing the video section contacts the Oxford Panopto server. There are no analytics or storage cookies in this site's own code.
-
-## Panopto limitations and validation
-
-The default view and copyable HTML use the supplied example recording, with autoplay disabled, captions requested, and interactivity enabled. **Reset example** restores that recording. To use another recording, paste its HTTPS `Embed.aspx?id=…` URL and select **Load my video**. The form supports institution-specific Panopto domains. It rebuilds only the video ID and documented embed settings into the snippet, discarding unrelated query parameters.
-
-`interactivity=all` enables interactive features; it does not generate contents entries. `captions=true` requests captions; it does not create them. The teacher must check chapters, captions, sharing permissions and the saved Canvas page with a student account. Embedded player layout can vary by Panopto version and viewport. A full-viewer link is always included as an alternative. Third-party sign-in or browser cookie policies can affect embedded playback.
-
-Canvas may adjust supported HTML when saving. Inline layout styles follow the supplied example; compatibility must be checked in the institution’s saved Canvas page. The website preview cannot reproduce Canvas’s sanitiser or institution-specific settings.
-
-Sources for the teaching guidance:
-
-- [Canvas HTML view guide](https://community.instructure.com/en/kb/articles/662912-how-do-i-use-the-html-view-in-the-rich-content-editor)
-- [Panopto employee’s example of the standard embed URL](https://community.panopto.com/discussion/1138/canvas-integration-data-via-panopto-api)
-
-## Maintenance
-
-- `index.html`: page content and forms.
-- `styles.css`: website presentation; these styles are not copied into Canvas.
-- `script.js`: generates self-contained HTML, handles previews and clipboard interaction.
-- `.nojekyll`: tells GitHub Pages to serve the static files directly.
-- `assets/alex-example.png`: supplied example portrait.
-
-To add another snippet later, add a section, a top navigation link and a separate generator/copy target. Keep sample content generic and escape user-entered text before generating HTML.
+When adding a snippet, include a section, a navigation link and a separate generator/copy target. Escape user-entered text before inserting it into HTML. After changes, check the affected preview, generated HTML, keyboard controls and small-screen layout.

@@ -100,19 +100,16 @@
         <form id="accordion-form">
           <label for="accordion-heading">Main accordion heading</label><input id="accordion-heading" value="Course resources" maxlength="180">
           <label for="accordion-body">Main content</label><textarea id="accordion-body" rows="3" maxlength="6000">Use these resources to prepare for the session and review what you have learned.</textarea>
-          <label class="option-row"><input type="checkbox" id="accordion-open"><span>Start with the main accordion expanded<small>Adds the <code>open</code> attribute. Leave unticked to start collapsed, as in the University example.</small></span></label>
+          <label class="option-row"><input type="checkbox" id="accordion-open" checked><span>Start with the main accordion expanded<small>Adds the <code>open</code> attribute. Your University may prevent accordions from starting expanded. If this setting has no effect, students will need to open the section themselves. This applies to the main accordion and all sub-accordions.</small></span></label>
           <div class="subsection-label">Sub-accordions</div>
         <div class="accordion-presets" role="group" aria-label="Example accordion structures"><button type="button" data-accordion-preset="0">None</button><button type="button" data-accordion-preset="1">One</button><button type="button" data-accordion-preset="2">Several</button></div>
           <div id="accordion-children"></div>
           <button type="button" class="primary-button" id="add-sub-accordion">Add sub-accordion <span aria-hidden="true">+</span></button>
           <p class="builder-status" id="accordion-status" role="status"></p>
-            <p class="preview-caption">Your University may prevent accordions from starting expanded. If this setting has no effect, students will need to open the section themselves. This applies to the main accordion and all sub-accordions.</p>
           <details class="advanced-options" id="accordion-advanced"><summary>Advanced options: spacing & colours</summary>
             <p>Mix text and background colours and adjust padding below. Every change updates the preview and copied HTML. These settings apply to all sub-accordions.</p>
             <div id="accordion-style-controls"></div>
-            <p class="contrast-guidance"><strong>Check accessibility when changing colours.</strong> The results use normal-text thresholds: AA requires 4.5:1 and AAA requires 7:1. Passing these colour checks does not establish overall WCAG conformance. Canvas theme styles can change the final appearance, so check your saved course page too.</p>
-            <p><a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">WCAG AA text contrast</a> · <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced.html">WCAG AAA text contrast</a></p>
-            <p>Ratios are displayed to three decimal places; pass/fail uses the unrounded result. Colours are opaque. If you inherit a text colour, the check uses the colour in this preview.</p>
+            <p class="contrast-guidance">Clear contrast makes text easier to read, especially for people with visual impairments. The <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">Web Content Accessibility Guidelines (WCAG)</a> set recommended contrast levels.</p>
             <button type="button" class="text-button reset-accordion-style" id="reset-accordion-style">Restore University spacing and colours</button>
           </details>
           <p id="accordion-style-error" class="field-error" role="status"></p>
