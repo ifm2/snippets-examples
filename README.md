@@ -6,6 +6,7 @@
 
 - **Flexbox profile cards:** introduce a teaching team with a photo, description and contact email. Wide and narrow previews show how the layout wraps on smaller screens.
 - **Panopto viewer:** embed a recording with a full-viewer link. Advanced options control captions, contents and interactivity, fullscreen, title, branding and autoplay.
+- **Callout boxes:** highlight preparation and reminders with editable numbered items, an optional heading and adjustable spacing and colours. The fictional preparation reminder contains no email address.
 - **Accordions:** build a main section with none, one or several sub-accordions. Edit headings and paragraphs, add or remove sections, and change padding and text/background colours.
 
 The accordion example starts with one sub-accordion. Both the main section and that sub-accordion start expanded so their contents are visible. Advanced Options starts closed. Choosing a smaller structure temporarily hides sections; choosing a larger structure restores their edited text during the current page session.
@@ -13,6 +14,8 @@ The accordion example starts with one sub-accordion. Both the main section and t
 Each builder updates its preview and copyable HTML together. The generated snippets use inline styles so they can be pasted into Canvas's HTML editor. The page also includes guidance on editing tags, adding course images and checking the saved result.
 
 ## Accessibility and Canvas compatibility
+
+The callout builder follows the University's box format: blue background (#e5f2f8), dark blue text and left border (#00507e) by default, with a Red preset using the University colours (#fce8e7 and #94040b), 12px padding, a 4px border and 12pt list text. The optional heading is initially enabled for the lab preparation example, above two numbered items. Advanced Options starts closed and offers colour mixers, padding, border width, heading spacing and live AA/AAA text contrast checks.
 
 The site includes keyboard focus indicators, a skip link, semantic headings, responsive layouts and reduced-motion support. Photo descriptions are editable, and accordion headings use native HTML disclosure controls.
 

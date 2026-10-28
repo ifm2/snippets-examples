@@ -412,3 +412,90 @@ renderAccordionStyleControls();
 addAccordionChild({ ...accordionSamples[0], open: true });
 renderAccordionEditors();
 byId('accordion-advanced').open = false;
+
+// Callouts retain the University box styles and use a numbered preparation list.
+const calloutPalettes = {
+  blue: { bg: '#e5f2f8', text: '#00507e', border: '#00507e' },
+  red: { bg: '#fce8e7', text: '#94040b', border: '#94040b' }
+};
+const calloutDefaults = { ...calloutPalettes.blue, padding: '12', 'border-width': '4', 'heading-gap': '8' };
+function updateCallout() {
+  const showHeading = byId('callout-show-heading').checked;
+  byId('callout-heading-fields').hidden = !showHeading;
+  const background = byId('callout-bg').value;
+  const text = byId('callout-text').value;
+  const border = byId('callout-border').value;
+  document.querySelectorAll('[data-callout-preset]').forEach(button => {
+    const palette = calloutPalettes[button.dataset.calloutPreset];
+    button.setAttribute('aria-pressed', String(palette.bg === background && palette.text === text && palette.border === border));
+  });
+  const padding = Number(byId('callout-padding').value);
+  const borderWidth = Number(byId('callout-border-width').value);
+  const headingGap = Number(byId('callout-heading-gap').value);
+  const heading = showHeading ? `\n  <h3 style="margin: 0 0 ${headingGap}px; color: inherit;">${escapeHTML(valueOf('callout-heading', 'Reminder'))}</h3>` : '';
+  const items = byId('callout-body').value.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+  const bullets = items.map(line => `    <li><span style="font-size: 12pt;">${escapeHTML(line)}</span></li>`).join('\n');
+  const html = `<div style="background: ${background}; color: ${text}; padding: ${padding}px; border-left: ${borderWidth}px solid ${border};">${heading}
+  <ol>
+${bullets}
+  </ol>
+</div>`;
+  byId('callout-preview').innerHTML = html;
+  byId('callout-code').textContent = html;
+  ['padding', 'border-width', 'heading-gap'].forEach(key => {
+    byId(`callout-${key}-value`).textContent = `${Number(byId(`callout-${key}`).value)}px`;
+  });
+  const ratio = contrastRatio(text, background);
+  const aa = ratio >= 4.5;
+  const aaa = ratio >= 7;
+  const sample = byId('callout-colour-sample');
+  sample.style.backgroundColor = background;
+  sample.style.color = text;
+  const result = byId('callout-contrast');
+  result.textContent = `${ratio.toFixed(3)}:1 · AA ${aa ? 'PASS' : 'FAIL'} (4.5:1) · AAA ${aaa ? 'PASS' : 'FAIL'} (7:1)`;
+  result.classList.toggle('contrast-fail', !aa);
+  result.classList.toggle('contrast-aaa', aa && !aaa);
+  const summary = byId('callout-contrast-summary');
+  summary.textContent = !aa ? 'Warning: text contrast is below AA (4.5:1) and AAA (7:1). Choose a stronger text/background contrast. Copying remains available.' : !aaa ? 'Text contrast meets AA (4.5:1), but falls below AAA (7:1). Copying remains available.' : 'Text contrast meets AA and AAA for normal-sized text in this preview.';
+  summary.classList.toggle('contrast-fail', !aa);
+  summary.classList.toggle('contrast-aaa', aa && !aaa);
+}
+byId('callout-form').addEventListener('submit', event => event.preventDefault());
+byId('callout-form').addEventListener('input', event => {
+  const input = event.target;
+  if (input.dataset.calloutHex) {
+    const valid = /^#[a-f\d]{6}$/i.test(input.value);
+    input.setAttribute('aria-invalid', String(!valid));
+    if (valid) byId(input.dataset.calloutHex).value = input.value;
+  }
+  if (input.dataset.calloutPicker) {
+    const field = byId(input.dataset.calloutPicker);
+    field.value = input.value;
+    field.setAttribute('aria-invalid', 'false');
+  }
+  byId('callout-error').textContent = byId('callout-form').querySelector('[aria-invalid="true"]') ? 'Enter a six-digit hex colour such as #fce8e7. The preview and HTML keep the last valid colour while you edit.' : '';
+  updateCallout();
+});
+document.querySelectorAll('[data-callout-preset]').forEach(button => {
+  button.addEventListener('click', () => {
+    Object.entries(calloutPalettes[button.dataset.calloutPreset]).forEach(([key, value]) => {
+      byId(`callout-${key}`).value = value;
+      const hex = byId(`callout-${key}-hex`);
+      hex.value = value;
+      hex.setAttribute('aria-invalid', 'false');
+    });
+    byId('callout-error').textContent = '';
+    updateCallout();
+  });
+});
+byId('reset-callout-style').addEventListener('click', () => {
+  Object.entries(calloutDefaults).forEach(([key, value]) => {
+    byId(`callout-${key}`).value = value;
+    const hex = byId(`callout-${key}-hex`);
+    if (hex) { hex.value = value; hex.setAttribute('aria-invalid', 'false'); }
+  });
+  byId('callout-error').textContent = '';
+  updateCallout();
+});
+updateCallout();
+byId('callout-advanced').open = false;

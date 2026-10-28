@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Practical HTML snippets for Canvas educators. Preview, personalise and copy profile cards, a Panopto viewer and nested accordions.">
+  <meta name="description" content="Practical HTML snippets for Canvas educators. Preview, personalise and copy profile cards, a Panopto viewer, nested accordions and callout boxes.">
   <title>Canvas snippets — a small toolkit for Canvas educators</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23235047'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='38' fill='white'%3E%26lt%3B/%3E%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
@@ -18,13 +18,14 @@
 <main id="main" class="shell">
   <section class="hero" aria-labelledby="page-title">
     <h1 id="page-title" class="toolkit-title"><span class="small-dot" aria-hidden="true"></span> A SMALL TOOLKIT FOR CANVAS EDUCATORS</h1>
-    <p class="hero-intro">A little HTML goes a long way. Explore three useful examples, make them your own, and copy them straight into Canvas. No coding experience needed.</p>
+    <p class="hero-intro">A little HTML goes a long way. Explore four useful examples, make them your own, and copy them straight into Canvas. No coding experience needed.</p>
     <nav class="snippet-nav" aria-label="Choose a snippet">
       <a href="#profiles" class="jump-card"><span class="jump-symbol" aria-hidden="true">▤</span><span><strong>Flexbox profile cards</strong><small>Introduce your teaching team</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
       <a href="#panopto" class="jump-card"><span class="jump-symbol" aria-hidden="true">▷</span><span><strong>Panopto viewer</strong><small>Keep video contents within reach</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
       <a href="#accordions" class="jump-card"><span class="jump-symbol" aria-hidden="true">≡</span><span><strong>Accordions</strong><small>Organise expandable sections</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
+      <a href="#callouts" class="jump-card"><span class="jump-symbol" aria-hidden="true">!</span><span><strong>Callout boxes</strong><small>Highlight reminders and instructions</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
     </nav>
-    <div class="hero-meta"><span>03 ready-to-adapt snippets</span><span>Responsive layouts</span><span>Plain HTML + inline styles</span></div>
+    <div class="hero-meta"><span>04 ready-to-adapt snippets</span><span>Responsive layouts</span><span>Plain HTML + inline styles</span></div>
   </section>
 
   <section id="how-to" class="starter" aria-labelledby="starter-title">
@@ -121,6 +122,39 @@
     <div class="guidance-grid"><div><h3>What to change in the HTML</h3><ul><li><code>&lt;details&gt;</code> holds one expandable section. Its <code>&lt;summary&gt;</code> is the heading students click.</li><li>Replace the words inside <code>&lt;summary&gt;</code> and the paragraph text inside <code>&lt;p&gt;</code>. Keep the tags around them.</li><li>A sub-accordion is another complete <code>&lt;details&gt;…&lt;/details&gt;</code> block inside the outer section’s content. Add as many as you need, or remove every inner block for a simple accordion.</li><li>The generator treats your text as plain text. Leave a blank line to start another paragraph. After pasting into Canvas, use the visual editor to add links, images or lists.</li></ul></div><div><h3>Keep the structure clear</h3><p>Use short, descriptive headings. Keep the most important instructions visible on the page, and use accordions for supporting information. Too many levels can make content hard to find; this builder uses one level of sub-accordions.</p><p>The <code>open</code> attribute starts a section expanded. Remove the attribute to start collapsed: <code>open="false"</code> still opens it.</p><div class="tip"><strong>University defaults, with optional changes</strong><p>The snippet retains <code>fossa fossa-r</code>. By default, the main heading uses <code>0.8em</code> padding; main content and sub-accordions use <code>0.5em</code>. There are no added borders, margins, sub-heading padding or inner content wrappers. Text colour inherits from the surrounding page. Extra styling from <code>fossa</code> depends on your University’s CSS.</p></div></div></div>
     <a class="back-top" href="#top">Back to snippets ↑</a>
   </section>
+    <section id="callouts" class="snippet-section" aria-labelledby="callouts-title">
+      <div class="section-heading"><div class="section-number">04</div><div><span class="eyebrow">REMINDERS &amp; INSTRUCTIONS</span><h2 id="callouts-title">Callout boxes</h2><p>Draw attention to preparation, deadlines or useful information with a simple coloured box.</p></div><span class="pill">University format</span></div>
+      <div class="workspace accordion-workspace">
+        <div class="example-panel"><div class="panel-bar"><span class="eyebrow">LIVE EXAMPLE</span><span class="preview-tag">Preparation reminder</span></div><div class="accordion-stage"><div id="callout-preview"></div></div><p class="preview-caption">Your University’s colours and spacing, with a numbered list and optional heading.</p></div>
+        <div class="edit-panel"><span class="eyebrow">MAKE IT YOURS</span><h3>Make a reminder.</h3><p>Write one numbered item per line. Numbers are added automatically. The preview and HTML update together.</p>
+          <form id="callout-form">
+            <label for="callout-body">Message</label><textarea id="callout-body" rows="4" maxlength="6000">Complete the Preparation Quiz
+Bring your first bridge design</textarea>
+            <div class="accordion-presets" role="group" aria-label="Callout colour presets"><button type="button" data-callout-preset="blue" aria-pressed="true">Blue</button><button type="button" data-callout-preset="red" aria-pressed="false">Red</button></div>
+            <label class="option-row"><input type="checkbox" id="callout-show-heading" checked><span>Include a heading</span></label>
+            <div id="callout-heading-fields"><label for="callout-heading">Heading</label><input id="callout-heading" value="Before Friday's Lab:" maxlength="180"></div>
+            <details class="advanced-options" id="callout-advanced"><summary>Advanced options: spacing &amp; colours</summary>
+              <fieldset class="accordion-style-area"><legend>Box colours and spacing</legend>
+                <label for="callout-bg">Background colour</label><div class="colour-inputs"><input type="color" id="callout-bg" value="#e5f2f8" data-callout-picker="callout-bg-hex" aria-label="Callout background colour picker"><input id="callout-bg-hex" value="#e5f2f8" data-callout-hex="callout-bg" aria-label="Callout background hex colour" maxlength="7" spellcheck="false"></div>
+                <label for="callout-text">Text colour</label><div class="colour-inputs"><input type="color" id="callout-text" value="#00507e" data-callout-picker="callout-text-hex" aria-label="Callout text colour picker"><input id="callout-text-hex" value="#00507e" data-callout-hex="callout-text" aria-label="Callout text hex colour" maxlength="7" spellcheck="false"></div>
+                <label for="callout-border">Left border colour</label><div class="colour-inputs"><input type="color" id="callout-border" value="#00507e" data-callout-picker="callout-border-hex" aria-label="Callout border colour picker"><input id="callout-border-hex" value="#00507e" data-callout-hex="callout-border" aria-label="Callout border hex colour" maxlength="7" spellcheck="false"></div>
+                <label for="callout-padding">Box padding <output id="callout-padding-value" for="callout-padding">12px</output></label><input type="range" id="callout-padding" min="0" max="48" value="12" aria-label="Callout padding in pixels">
+                <label for="callout-border-width">Left border width <output id="callout-border-width-value" for="callout-border-width">4px</output></label><input type="range" id="callout-border-width" min="0" max="12" value="4" aria-label="Callout border width in pixels">
+                <label for="callout-heading-gap">Space below optional heading <output id="callout-heading-gap-value" for="callout-heading-gap">8px</output></label><input type="range" id="callout-heading-gap" min="0" max="32" value="8" aria-label="Callout heading spacing in pixels">
+                <div class="colour-sample" id="callout-colour-sample">Reminder — sample text</div><p class="contrast-result" id="callout-contrast"></p>
+              </fieldset>
+              <p class="contrast-guidance">Clear contrast makes text easier to read, especially for people with visual impairments. The <a href="https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html">Web Content Accessibility Guidelines (WCAG)</a> set recommended contrast levels.</p>
+              <button type="button" class="text-button reset-accordion-style" id="reset-callout-style">Restore default spacing and colours</button>
+            </details>
+            <p id="callout-error" class="field-error" role="status"></p><p id="callout-contrast-summary" class="contrast-summary" role="status" aria-live="polite" aria-atomic="true"></p>
+          </form>
+        </div>
+      </div>
+      <div class="code-panel"><div class="code-bar"><span><strong>Your snippet</strong><small>HTML · ready for Canvas</small></span><button type="button" class="copy-button" data-copy="callout-code">Copy HTML <span aria-hidden="true">⧉</span></button></div><pre tabindex="0" aria-label="Callout box HTML"><code id="callout-code"></code></pre></div>
+      <div class="guidance-grid"><div><h3>What to change in the HTML</h3><ul><li>The outer <code>&lt;div&gt;</code> sets the background, text colour, padding and left border.</li><li>Each <code>&lt;li&gt;</code> is one numbered item inside the <code>&lt;ol&gt;</code> list. Replace its text while keeping the tags.</li><li>The optional <code>&lt;h3&gt;</code> adds a heading. Use a heading level that fits your Canvas page.</li></ul></div><div><h3>Keep the message clear</h3><p>Say what students need to do and when. Use words to explain the purpose of the box so colour is not the only clue.</p><p>The example is a pretend preparation reminder. Replace it with your own instructions. After pasting, check the saved page and its colours in Canvas.</p></div></div>
+      <a class="back-top" href="#top">Back to snippets ↑</a>
+    </section>
+
   <noscript><p class="tip">Enable JavaScript to generate previews and copyable snippets. The editing guidance is still available above.</p></noscript>
 </main>
 <footer class="shell site-footer"><span>Canvas snippets<span class="brand-dot">.</span> <span class="footer-sub">A small toolkit for better teaching pages.</span></span><a href="https://community.instructure.com/en/kb/articles/662912-how-do-i-use-the-html-view-in-the-rich-content-editor">Canvas HTML help ↗</a><span class="independent">Independent resource. Not affiliated with Instructure or Panopto.</span></footer>
