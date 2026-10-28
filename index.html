@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Two practical HTML snippets for Canvas teachers. Preview, personalise and copy responsive profile cards and a Panopto video embed.">
+  <title>Canvas snippets — small changes, better course pages</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23235047'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='38' fill='white'%3E%26lt%3B/%3E%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body id="top">
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><div class="shell header-inner">
+  <a class="brand" href="#top"><span class="brand-icon" aria-hidden="true">&lt;/&gt;</span> Canvas snippets<span class="brand-dot">.</span></a>
+  <a class="header-link" href="#how-to">New to HTML? Start here <span aria-hidden="true">↗</span></a>
+</div></header>
+<main id="main" class="shell">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="eyebrow"><span class="small-dot"></span> A SMALL TOOLKIT FOR CANVAS TEACHERS</div>
+    <h1 id="page-title">Small snippets.<br><em>Better course pages.</em></h1>
+    <p class="hero-intro">A little HTML goes a long way. Explore two useful layouts, make them your own, and copy them straight into Canvas. No coding experience needed.</p>
+    <nav class="snippet-nav" aria-label="Choose a snippet">
+      <a href="#profiles" class="jump-card"><span class="jump-symbol" aria-hidden="true">▤</span><span><strong>Flexbox profile cards</strong><small>Introduce your teaching team</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
+      <a href="#panopto" class="jump-card"><span class="jump-symbol" aria-hidden="true">▷</span><span><strong>Panopto viewer</strong><small>Keep video contents within reach</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
+    </nav>
+    <div class="hero-meta"><span>02 ready-to-adapt snippets</span><span>Responsive layouts</span><span>Plain HTML + inline styles</span></div>
+  </section>
+
+  <section id="how-to" class="starter" aria-labelledby="starter-title">
+    <div><span class="eyebrow">YOUR FIRST SNIPPET</span><h2 id="starter-title">From here to your Canvas page.</h2><p>HTML is text with labels called <strong>tags</strong>. Tags such as <code>&lt;h2&gt;</code> mark a heading; <code>&lt;p&gt;</code> marks a paragraph.</p></div>
+    <ol class="steps"><li><strong>Choose & personalise</strong><span>Use a snippet below. Change the sample words, links and settings.</span></li><li><strong>Copy the HTML</strong><span>Open your Canvas page → Edit → the <code>&lt;/&gt;</code> HTML view. Paste at the end, after the existing code.</span></li><li><strong>Preview, save & check</strong><span>Return to the visual editor, save, then check on a small screen and in Student View.</span></li></ol>
+    <p class="starter-foot">Try a draft page first. If your institution has hidden HTML view, ask your Canvas support team. <a href="https://community.instructure.com/en/kb/articles/662912-how-do-i-use-the-html-view-in-the-rich-content-editor">Canvas HTML editor guide ↗</a></p>
+  </section>
+
+  <section id="profiles" class="snippet-section" aria-labelledby="profiles-title">
+    <div class="section-heading"><div class="section-number">01</div><div><span class="eyebrow">LAYOUT & PEOPLE</span><h2 id="profiles-title">Flexbox profile cards</h2><p>A photo and introduction, side by side. On smaller screens, the text wraps underneath so everyone has room.</p></div><span class="pill">Wraps on small screens</span></div>
+    <div class="workspace">
+      <div class="example-panel">
+        <div class="panel-bar"><span class="eyebrow">LIVE EXAMPLE</span><div class="segmented" role="group" aria-label="Profile preview width"><button type="button" class="selected" data-width="wide" aria-pressed="true">Wide</button><button type="button" data-width="narrow" aria-pressed="false">Narrow</button></div></div>
+        <div class="preview-stage"><div id="profile-preview" class="profile-preview"></div></div>
+        <p class="preview-caption">Try “Narrow” to see the same HTML wrap. The initials image is a sample photo placeholder.</p>
+      </div>
+      <div class="edit-panel"><span class="eyebrow">MAKE IT YOURS</span><h3>A quick introduction.</h3><p>Try changing these fields. The preview and HTML update together.</p>
+        <form id="profile-form"><label for="profile-name">Name and pronouns</label><input id="profile-name" value="Alex Morgan (they/them)" maxlength="140">
+          <label for="profile-role">Introduction</label><textarea id="profile-role" rows="3" maxlength="2000">Alex teaches on the course and helps students turn new ideas into practical skills. Ask them about weekly activities, coursework or getting started.</textarea>
+          <label for="profile-email">Contact email</label><input type="email" id="profile-email" value="alex@example.com">
+          <label for="profile-image">Photo URL <span class="optional">(optional)</span></label><input type="url" id="profile-image" placeholder="https://…" aria-describedby="image-help"><small id="image-help">Leave blank for initials. In Canvas, use a course image students can access.</small>
+          <label for="profile-alt">Photo description</label><input id="profile-alt" value="Portrait of Alex Morgan" aria-describedby="alt-help"><small id="alt-help">When adding a photo, describe it briefly for people using a screen reader.</small>
+          <p class="field-error" id="profile-error" role="status"></p>
+        </form>
+      </div>
+    </div>
+    <div class="code-panel"><div class="code-bar"><span><strong>Your snippet</strong><small>HTML · ready for Canvas</small></span><button type="button" class="copy-button" data-copy="profile-code">Copy HTML <span aria-hidden="true">⧉</span></button></div><pre tabindex="0" aria-label="Profile card HTML"><code id="profile-code"></code></pre></div>
+    <div class="guidance-grid"><div><h3>What to change in the HTML</h3><ul><li>Replace the words between <code>&lt;h3&gt;</code> and <code>&lt;/h3&gt;</code> with the person’s name.</li><li>Replace the paragraph text between <code>&lt;p&gt;</code> and <code>&lt;/p&gt;</code>. Keep the opening and closing tags.</li><li>For a photo, use the form above, or replace the initials block with an <code>&lt;img&gt;</code>. Its <code>src</code> is the image address and <code>alt</code> is its description.</li><li>Change the email in both places: after <code>mailto:</code> and in the visible link text.</li></ul></div><div><h3>Why this layout works</h3><p><code>display: flex</code> puts the image and text next to each other. <code>flex-wrap: wrap</code> lets them stack when space runs out. <code>gap: 16px</code> sets the space between them.</p><p>To add another person, paste a second copy of the whole snippet. Keep the heading order: the page’s section heading should be <code>&lt;h2&gt;</code>, followed by each person’s <code>&lt;h3&gt;</code>.</p><div class="tip"><strong>A note about course images</strong><p>Upload the photo to your Canvas course and insert it using the editor. In HTML view, copy that image’s <code>src</code> address into this snippet. Check its file permissions and test in Student View.</p></div></div></div>
+    <a class="back-top" href="#top">Back to snippets ↑</a>
+  </section>
+
+  <section id="panopto" class="snippet-section" aria-labelledby="panopto-title">
+    <div class="section-heading"><div class="section-number">02</div><div><span class="eyebrow">VIDEO & NAVIGATION</span><h2 id="panopto-title">Panopto viewer</h2><p>Give your video a little breathing room, with interactivity enabled so students can access its table of contents.</p></div><span class="pill">Contents + captions enabled</span></div>
+    <div class="workspace video-workspace">
+      <div class="example-panel"><div class="panel-bar"><span class="eyebrow" id="video-preview-label">LIVE EXAMPLE</span><span class="preview-tag">Panopto embed</span></div>
+        <div id="video-preview" class="video-preview">
+          <p><a href="https://ox.cloud.panopto.eu/Panopto/Pages/Viewer.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769">Open the example recording in Panopto</a>. Enable JavaScript to view it here and personalise the snippet.</p>
+        </div><p class="preview-caption" id="video-caption">A real Panopto recording. Use its contents menu to explore the chapters, or open the full viewer.</p>
+      </div>
+      <div class="edit-panel"><span class="eyebrow">MAKE IT YOURS</span><h3>Bring your own video.</h3><p>In Panopto, open <strong>Share → Embed</strong>. Copy just the address inside the iframe’s <code>src="…"</code> quotation marks.</p>
+        <form id="video-form"><label for="video-title">Video heading</label><input id="video-title" value="Panopto example video" maxlength="180"><label for="video-url">Panopto embed URL</label><input type="url" id="video-url" value="https://ox.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769" placeholder="https://your-site.panopto.eu/Panopto/Pages/Embed.aspx?id=…" aria-describedby="video-url-help"><small id="video-url-help">Replace the sample address with your own Embed.aspx URL, not the complete iframe code. Your edits stay in this browser session.</small><p class="field-error" id="video-error" role="status"></p><button type="submit" class="primary-button">Load my video <span aria-hidden="true">↗</span></button><button type="button" class="text-button" id="reset-video">Reset example</button></form>
+        <p class="small-note">A real embed may require Panopto sign-in. Previewing here contacts your Panopto server. Sharing permissions still apply.</p>
+      </div>
+    </div>
+    <div class="code-panel"><div class="code-bar"><span><strong>Your snippet</strong><small id="video-code-note">HTML · replace the example addresses before use</small></span><button type="button" class="copy-button" data-copy="video-code">Copy HTML <span aria-hidden="true">⧉</span></button></div><pre tabindex="0" aria-label="Panopto viewer HTML"><code id="video-code"></code></pre></div>
+    <div class="guidance-grid"><div><h3>Set it up, step by step</h3><ol><li>Choose your video in Panopto. Check that your students have permission to view it.</li><li>In <strong>Share → Embed</strong>, choose <strong>Interactivity: All</strong> and enable captions if available.</li><li>Paste the embed address into the field above and select <strong>Load my video</strong>. This fills in both the embed and the “Open in Panopto” link.</li><li>Copy the HTML into Canvas. Test the contents menu, captions and full viewer link in Student View.</li></ol><p>Editing by hand? The iframe’s <code>src</code> is the embed address. The link’s <code>href</code> is the full viewer address. Replace the host and video ID in <em>both</em> addresses with your own. Keep <code>Embed.aspx</code> for the iframe and <code>Viewer.aspx</code> for the link.</p></div><div><h3>Keep the contents accessible</h3><p><code>interactivity=all</code> enables the viewer’s interactive features. The recording must already have contents entries; this HTML does not create chapters or captions.</p><p><code>width: 100%</code> fills the available space. <code>height: 620px</code> leaves room for the viewer and its menus. Change the height if your video needs more space.</p><div class="tip"><strong>Always offer another way in</strong><p>The snippet includes an “Open in Panopto” link. On a small screen, or if the embed cannot load, students can use the full viewer. Check captions for accuracy and provide a transcript when needed.</p></div></div></div>
+    <a class="back-top" href="#top">Back to snippets ↑</a>
+  </section>
+
+  <aside class="last-note"><span class="brand-icon" aria-hidden="true">&lt;/&gt;</span><div><h2>Keep the useful bits. Make the rest yours.</h2><p>The snippets use inline styles so they travel with your content. Canvas may adjust HTML when you save; check the saved result in your own course.</p></div></aside>
+  <noscript><p class="tip">Enable JavaScript to generate previews and copyable snippets. The editing guidance is still available above.</p></noscript>
+</main>
+<footer class="shell site-footer"><span>Canvas snippets<span class="brand-dot">.</span> <span class="footer-sub">A small toolkit for better teaching pages.</span></span><a href="https://community.instructure.com/en/kb/articles/662912-how-do-i-use-the-html-view-in-the-rich-content-editor">Canvas HTML help ↗</a><span class="independent">Independent resource. Not affiliated with Instructure or Panopto.</span></footer>
+<div id="copy-status" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
