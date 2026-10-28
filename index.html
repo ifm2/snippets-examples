@@ -65,7 +65,7 @@
         </div><p class="preview-caption" id="video-caption">A real Panopto recording. Use its contents menu to explore the chapters, or open the full viewer.</p>
       </div>
       <div class="edit-panel"><span class="eyebrow">MAKE IT YOURS</span><h3>Bring your own video.</h3><p>In Panopto, open <strong>Share → Embed</strong>. Copy just the address inside the iframe’s <code>src="…"</code> quotation marks.</p>
-        <form id="video-form"><label for="video-title">Video heading</label><input id="video-title" value="Panopto example video" maxlength="180"><label for="video-url">Panopto embed URL</label><input type="url" id="video-url" value="https://ox.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769" placeholder="https://your-site.panopto.eu/Panopto/Pages/Embed.aspx?id=…" aria-describedby="video-url-help"><small id="video-url-help">Replace the sample address with your own Embed.aspx URL, not the complete iframe code. Your edits stay in this browser session.</small><p class="field-error" id="video-error" role="status"></p><button type="submit" class="primary-button">Load my video <span aria-hidden="true">↗</span></button><button type="button" class="text-button" id="reset-video">Reset example</button>
+        <form id="video-form"><label for="video-title">Video heading</label><input id="video-title" value="Panopto example video" maxlength="180"><label for="video-url">Panopto embed URL</label><input type="url" id="video-url" value="https://ox.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769" placeholder="https://your-site.panopto.eu/Panopto/Pages/Embed.aspx?id=…" aria-describedby="video-url-help"><small id="video-url-help">Replace the sample address with your own Embed.aspx URL, not the complete iframe code. Your edits stay in this browser session. Videos restricted to your Canvas course may not load in this preview. They can still work in Canvas when students have permission to view them.</small><p class="field-error" id="video-error" role="status"></p><button type="submit" class="primary-button">Load my video <span aria-hidden="true">↗</span></button><button type="button" class="text-button" id="reset-video">Reset example</button>
           <details class="advanced-options"><summary>Advanced options</summary>
             <p>Tick a setting to enable it. Changes update the preview and HTML immediately and restart the viewer. “Reset example” restores all the original settings.</p>
             <fieldset><legend>Player settings</legend>
@@ -91,19 +91,22 @@
   <section id="accordions" class="snippet-section" aria-labelledby="accordions-title">
     <div class="section-heading"><div class="section-number">03</div><div><span class="eyebrow">CONTENT & STRUCTURE</span><h2 id="accordions-title">Accordions</h2><p>Let students expand the sections they need. Keep it simple, or place one or more sub-accordions inside the main section.</p></div><span class="pill">Native HTML controls</span></div>
     <div class="workspace accordion-workspace">
-      <div class="example-panel"><div class="panel-bar"><span class="eyebrow">LIVE EXAMPLE</span><span class="preview-tag" id="accordion-count">2 sub-accordions</span></div>
+      <div class="example-panel"><div class="panel-bar"><span class="eyebrow">LIVE EXAMPLE</span><span class="preview-tag" id="accordion-count">1 sub-accordion</span></div>
         <div class="accordion-stage"><div id="accordion-preview"></div></div>
         <p class="preview-caption">Click a heading to expand or collapse it. With a keyboard, Tab to a heading and press Enter or Space. Sub-accordions open independently.</p>
       </div>
       <div class="edit-panel"><span class="eyebrow">MAKE IT YOURS</span><h3>Build your sections.</h3><p>Try a starting structure, then edit its text. Adding or removing sub-accordions updates the preview and HTML.</p>
-        <div class="accordion-presets" role="group" aria-label="Example accordion structures"><button type="button" data-accordion-preset="0">None</button><button type="button" data-accordion-preset="1">One</button><button type="button" data-accordion-preset="2">Several</button></div>
+
         <form id="accordion-form">
           <label for="accordion-heading">Main accordion heading</label><input id="accordion-heading" value="Course resources" maxlength="180">
           <label for="accordion-body">Main content</label><textarea id="accordion-body" rows="3" maxlength="6000">Use these resources to prepare for the session and review what you have learned.</textarea>
           <label class="option-row"><input type="checkbox" id="accordion-open"><span>Start with the main accordion expanded<small>Adds the <code>open</code> attribute. Leave unticked to start collapsed, as in the University example.</small></span></label>
-          <div class="subsection-label">Sub-accordions</div><div id="accordion-children"></div>
+          <div class="subsection-label">Sub-accordions</div>
+        <div class="accordion-presets" role="group" aria-label="Example accordion structures"><button type="button" data-accordion-preset="0">None</button><button type="button" data-accordion-preset="1">One</button><button type="button" data-accordion-preset="2">Several</button></div>
+          <div id="accordion-children"></div>
           <button type="button" class="primary-button" id="add-sub-accordion">Add sub-accordion <span aria-hidden="true">+</span></button>
           <p class="builder-status" id="accordion-status" role="status"></p>
+            <p class="preview-caption">Your University may prevent accordions from starting expanded. If this setting has no effect, students will need to open the section themselves. This applies to the main accordion and all sub-accordions.</p>
           <details class="advanced-options" id="accordion-advanced"><summary>Advanced options: spacing & colours</summary>
             <p>Mix text and background colours and adjust padding below. Every change updates the preview and copied HTML. These settings apply to all sub-accordions.</p>
             <div id="accordion-style-controls"></div>

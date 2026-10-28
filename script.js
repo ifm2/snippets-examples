@@ -205,6 +205,7 @@ resetVideo();
 // Each child is a sibling disclosure nested inside the main disclosure.
 let nextAccordionId = 1;
 let accordionChildren = [];
+let hiddenAccordionChildren = [];
 const accordionSamples = [
   { title: 'Before the session', body: 'Read the introduction and make a note of one question you would like to discuss.' },
   { title: 'Further reading', body: 'Review the worked examples after the session. Try applying one idea to a question of your own.' }
@@ -321,6 +322,10 @@ ${[paragraphs, children].filter(Boolean).join('\n')}
 }
 
 function renderAccordionEditors() {
+  document.querySelectorAll('[data-accordion-preset]').forEach((button) => {
+    const count = Number(button.dataset.accordionPreset);
+    button.setAttribute('aria-pressed', String(count === 2 ? accordionChildren.length >= 2 : accordionChildren.length === count));
+  });
   byId('accordion-children').innerHTML = accordionChildren.length ? accordionChildren.map((child, index) => `
     <fieldset class="sub-accordion-editor" data-child-id="${child.id}">
       <legend>Sub-accordion ${index + 1}</legend>
@@ -383,10 +388,16 @@ byId('accordion-children').addEventListener('click', (event) => {
 
 document.querySelectorAll('[data-accordion-preset]').forEach((button) => {
   button.addEventListener('click', () => {
-    accordionChildren = [];
-    for (let index = 0; index < Number(button.dataset.accordionPreset); index++) addAccordionChild(accordionSamples[index]);
+    const count = Number(button.dataset.accordionPreset);
+    if (accordionChildren.length > count) {
+      hiddenAccordionChildren = accordionChildren.splice(count).concat(hiddenAccordionChildren);
+    }
+    while (accordionChildren.length < count) {
+      if (hiddenAccordionChildren.length) accordionChildren.push(hiddenAccordionChildren.shift());
+      else addAccordionChild(accordionSamples[accordionChildren.length]);
+    }
     renderAccordionEditors();
-    byId('accordion-status').textContent = `Example loaded: ${accordionChildren.length} sub-accordion${accordionChildren.length === 1 ? '' : 's'}.`;
+    byId('accordion-status').textContent = `${accordionChildren.length} sub-accordion${accordionChildren.length === 1 ? '' : 's'}. Existing text is kept; sections hidden by these buttons can be restored by choosing a larger structure.`;
   });
 });
 
@@ -398,6 +409,6 @@ byId('reset-accordion-style').addEventListener('click', () => {
 });
 
 renderAccordionStyleControls();
-accordionSamples.forEach(addAccordionChild);
+addAccordionChild(accordionSamples[0]);
 renderAccordionEditors();
 byId('accordion-advanced').open = false;
