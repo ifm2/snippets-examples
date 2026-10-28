@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Two practical HTML snippets for Canvas teachers. Preview, personalise and copy responsive profile cards and a Panopto video embed.">
-  <title>Canvas snippets — small changes, better course pages</title>
+  <title>Canvas snippets — a small toolkit for Canvas educators</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23235047'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-size='38' fill='white'%3E%26lt%3B/%3E%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles.css">
   <script src="script.js" defer></script>
@@ -17,8 +17,7 @@
 </div></header>
 <main id="main" class="shell">
   <section class="hero" aria-labelledby="page-title">
-    <div class="eyebrow"><span class="small-dot"></span> A SMALL TOOLKIT FOR CANVAS TEACHERS</div>
-    <h1 id="page-title">Small snippets.<br><em>Better course pages.</em></h1>
+    <h1 id="page-title" class="toolkit-title"><span class="small-dot" aria-hidden="true"></span> A SMALL TOOLKIT FOR CANVAS EDUCATORS</h1>
     <p class="hero-intro">A little HTML goes a long way. Explore two useful layouts, make them your own, and copy them straight into Canvas. No coding experience needed.</p>
     <nav class="snippet-nav" aria-label="Choose a snippet">
       <a href="#profiles" class="jump-card"><span class="jump-symbol" aria-hidden="true">▤</span><span><strong>Flexbox profile cards</strong><small>Introduce your teaching team</small></span><span class="jump-arrow" aria-hidden="true">↓</span></a>
@@ -57,7 +56,7 @@
   </section>
 
   <section id="panopto" class="snippet-section" aria-labelledby="panopto-title">
-    <div class="section-heading"><div class="section-number">02</div><div><span class="eyebrow">VIDEO & NAVIGATION</span><h2 id="panopto-title">Panopto viewer</h2><p>Give your video a little breathing room, with interactivity enabled so students can access its table of contents.</p></div><span class="pill">Contents + captions enabled</span></div>
+    <div class="section-heading"><div class="section-number">02</div><div><span class="eyebrow">VIDEO & NAVIGATION</span><h2 id="panopto-title">Panopto viewer</h2><p>Give your video a little breathing room, with interactivity enabled so students can access its table of contents.</p></div><span class="pill" id="video-feature-badge">Contents + captions enabled</span></div>
     <div class="workspace video-workspace">
       <div class="example-panel"><div class="panel-bar"><span class="eyebrow" id="video-preview-label">LIVE EXAMPLE</span><span class="preview-tag">Panopto embed</span></div>
         <div id="video-preview" class="video-preview">
@@ -65,7 +64,21 @@
         </div><p class="preview-caption" id="video-caption">A real Panopto recording. Use its contents menu to explore the chapters, or open the full viewer.</p>
       </div>
       <div class="edit-panel"><span class="eyebrow">MAKE IT YOURS</span><h3>Bring your own video.</h3><p>In Panopto, open <strong>Share → Embed</strong>. Copy just the address inside the iframe’s <code>src="…"</code> quotation marks.</p>
-        <form id="video-form"><label for="video-title">Video heading</label><input id="video-title" value="Panopto example video" maxlength="180"><label for="video-url">Panopto embed URL</label><input type="url" id="video-url" value="https://ox.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769" placeholder="https://your-site.panopto.eu/Panopto/Pages/Embed.aspx?id=…" aria-describedby="video-url-help"><small id="video-url-help">Replace the sample address with your own Embed.aspx URL, not the complete iframe code. Your edits stay in this browser session.</small><p class="field-error" id="video-error" role="status"></p><button type="submit" class="primary-button">Load my video <span aria-hidden="true">↗</span></button><button type="button" class="text-button" id="reset-video">Reset example</button></form>
+        <form id="video-form"><label for="video-title">Video heading</label><input id="video-title" value="Panopto example video" maxlength="180"><label for="video-url">Panopto embed URL</label><input type="url" id="video-url" value="https://ox.cloud.panopto.eu/Panopto/Pages/Embed.aspx?id=2e6213de-5173-49c5-bc0d-b4f100ac1769" placeholder="https://your-site.panopto.eu/Panopto/Pages/Embed.aspx?id=…" aria-describedby="video-url-help"><small id="video-url-help">Replace the sample address with your own Embed.aspx URL, not the complete iframe code. Your edits stay in this browser session.</small><p class="field-error" id="video-error" role="status"></p><button type="submit" class="primary-button">Load my video <span aria-hidden="true">↗</span></button><button type="button" class="text-button" id="reset-video">Reset example</button>
+          <details class="advanced-options"><summary>Advanced options</summary>
+            <p>Tick a setting to enable it. Changes update the preview and HTML immediately and restart the viewer. “Reset example” restores all the original settings.</p>
+            <fieldset><legend>Player settings</legend>
+              <label class="option-row"><input type="checkbox" id="video-captions" data-video-option checked><span>Show captions<small><code>captions=<span data-option-value="video-captions">true</span></code> controls whether captions appear by default, when available.</small></span></label>
+              <label class="option-row"><input type="checkbox" id="video-interactivity" data-video-option checked><span>Enable contents and interactivity<small><code>interactivity=<span data-option-value="video-interactivity">all</span></code> controls contents, search and other interactive features: tick for <code>all</code>, untick for <code>none</code>.</small></span></label>
+              <label class="option-row"><input type="checkbox" id="video-fullscreen" data-video-option checked><span>Allow fullscreen<small>Adds <code>allowfullscreen</code> and the <code>fullscreen</code> permission to the iframe. Unticking removes both.</small></span></label>
+              <label class="option-row"><input type="checkbox" id="video-showtitle" data-video-option checked><span>Show the video title<small><code>showtitle=<span data-option-value="video-showtitle">true</span></code> controls the title inside the player.</small></span></label>
+              <label class="option-row"><input type="checkbox" id="video-showbrand" data-video-option checked><span>Show branding<small><code>showbrand=<span data-option-value="video-showbrand">true</span></code> controls the player’s branding.</small></span></label>
+              <label class="option-row"><input type="checkbox" id="video-offerviewer" data-video-option checked><span>Offer “Watch in Panopto”<small><code>offerviewer=<span data-option-value="video-offerviewer">true</span></code> controls the player’s link to the full viewer. The separate text link stays available.</small></span></label>
+              <label class="option-row"><input type="checkbox" id="video-autoplay" data-video-option><span>Request autoplay<small><code>autoplay=<span data-option-value="video-autoplay">false</span></code> controls whether playback is requested on load. Browsers may block autoplay.</small></span></label>
+            </fieldset>
+            <p id="video-options-status" role="status"></p>
+          </details>
+        </form>
         <p class="small-note">A real embed may require Panopto sign-in. Previewing here contacts your Panopto server. Sharing permissions still apply.</p>
       </div>
     </div>
@@ -74,7 +87,6 @@
     <a class="back-top" href="#top">Back to snippets ↑</a>
   </section>
 
-  <aside class="last-note"><span class="brand-icon" aria-hidden="true">&lt;/&gt;</span><div><h2>Keep the useful bits. Make the rest yours.</h2><p>The snippets use inline styles so they travel with your content. Canvas may adjust HTML when you save; check the saved result in your own course.</p></div></aside>
   <noscript><p class="tip">Enable JavaScript to generate previews and copyable snippets. The editing guidance is still available above.</p></noscript>
 </main>
 <footer class="shell site-footer"><span>Canvas snippets<span class="brand-dot">.</span> <span class="footer-sub">A small toolkit for better teaching pages.</span></span><a href="https://community.instructure.com/en/kb/articles/662912-how-do-i-use-the-html-view-in-the-rich-content-editor">Canvas HTML help ↗</a><span class="independent">Independent resource. Not affiliated with Instructure or Panopto.</span></footer>

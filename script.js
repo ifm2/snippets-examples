@@ -73,11 +73,17 @@ function parsePanopto(raw) {
 
 function videoSnippet(video) {
   const title = escapeHTML(valueOf('video-title', 'Welcome to the course'));
-  const embed = video?.embed || 'https://YOUR_PANOPTO_HOST/Panopto/Pages/Embed.aspx?id=YOUR_VIDEO_ID&autoplay=false&offerviewer=true&showtitle=true&showbrand=true&captions=true&interactivity=all';
+  const embed = new URL(video?.embed || 'https://YOUR_PANOPTO_HOST/Panopto/Pages/Embed.aspx?id=YOUR_VIDEO_ID');
+  for (const key of ['autoplay', 'offerviewer', 'showtitle', 'showbrand', 'captions']) {
+    embed.searchParams.set(key, String(byId(`video-${key}`).checked));
+  }
+  embed.searchParams.set('interactivity', byId('video-interactivity').checked ? 'all' : 'none');
+  const fullscreen = byId('video-fullscreen').checked;
+  const permissions = fullscreen ? ' allowfullscreen="allowfullscreen" allow="autoplay; fullscreen"' : ' allow="autoplay"';
   const viewer = video?.viewer || 'https://YOUR_PANOPTO_HOST/Panopto/Pages/Viewer.aspx?id=YOUR_VIDEO_ID';
   return `<h2>${title}</h2>
 <div style="width: 100%; max-width: 960px; margin-bottom: 16px;">
-  <iframe style="display: block; width: 100%; height: 620px; border: 1px solid #464646;" src="${escapeHTML(embed)}" title="${title} — Panopto video player" loading="lazy" allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" aria-label="${title} — Panopto video player"></iframe>
+  <iframe style="display: block; width: 100%; height: 620px; border: 1px solid #464646;" src="${escapeHTML(embed.href)}" title="${title} — Panopto video player" loading="lazy"${permissions} aria-label="${title} — Panopto video player"></iframe>
 </div>
 <p><a href="${escapeHTML(viewer)}">Open ${title} in Panopto</a> to use the full video viewer.</p>`;
 }
@@ -85,6 +91,11 @@ function videoSnippet(video) {
 function updateVideoCode() {
   byId('video-code').textContent = videoSnippet(currentVideo);
   byId('video-code-note').textContent = currentVideo ? 'HTML · ready for Canvas' : 'HTML · replace the example addresses before use';
+  byId('video-feature-badge').textContent = byId('video-captions').checked && byId('video-interactivity').checked ? 'Contents + captions enabled' : 'Custom viewer settings';
+  document.querySelectorAll('[data-option-value]').forEach((output) => {
+    const id = output.dataset.optionValue;
+    output.textContent = id === 'video-interactivity' ? (byId(id).checked ? 'all' : 'none') : String(byId(id).checked);
+  });
 }
 
 function renderVideo(isExample = false) {
@@ -92,13 +103,15 @@ function renderVideo(isExample = false) {
   byId('video-preview').innerHTML = videoSnippet(currentVideo);
   byId('video-preview').classList.add('has-video');
   byId('video-preview-label').textContent = isExample ? 'LIVE EXAMPLE' : 'YOUR LIVE EMBED';
-  byId('video-caption').textContent = `${isExample ? 'Example recording' : 'Your recording'} in the real Panopto viewer. Open the contents menu to explore its chapters. If the embed cannot load, use the full viewer link and check sharing permissions. Captions and contents depend on the recording.`;
+  const contentsHelp = byId('video-interactivity').checked ? 'Open the contents menu to explore its chapters.' : 'Contents and interactivity are disabled in this embed.';
+  byId('video-caption').textContent = `${isExample ? 'Example recording' : 'Your recording'} in the real Panopto viewer. ${contentsHelp} If the embed cannot load, use the full viewer link and check sharing permissions. Captions and contents depend on the recording.`;
   document.querySelector('[data-copy="video-code"]').disabled = false;
 }
 
 function resetVideo() {
   byId('video-form').reset();
   byId('video-error').textContent = '';
+  byId('video-options-status').textContent = '';
   byId('video-url').value = exampleVideoURL;
   currentVideo = parsePanopto(exampleVideoURL);
   renderVideo(true);
@@ -156,6 +169,14 @@ byId('video-form').addEventListener('submit', (event) => {
 });
 
 byId('reset-video').addEventListener('click', resetVideo);
+
+document.querySelectorAll('[data-video-option]').forEach((option) => {
+  option.addEventListener('change', () => {
+    if (currentVideo) renderVideo(currentVideo.viewer === parsePanopto(exampleVideoURL).viewer);
+    else updateVideoCode();
+    byId('video-options-status').textContent = currentVideo ? 'Settings applied to the preview and HTML.' : 'Settings applied to the HTML. Load a video to preview them.';
+  });
+});
 
 document.querySelectorAll('[data-copy]').forEach((button) => {
   button.addEventListener('click', async () => {

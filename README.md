@@ -32,6 +32,7 @@ To update the site, edit or upload these same files in the repository and commit
 - Anchor links at the top of the page.
 - A profile customiser with a wide/narrow preview, optional HTTPS photo and email, and generated HTML.
 - A real Panopto example recording, plus a customiser for previewing and copying your own video embed.
+- Expandable advanced options for captions, interactivity, fullscreen, title, branding, the player’s viewer link and autoplay. Changes update both the preview and copied HTML; Reset example restores all original defaults.
 - Copy buttons, readable HTML, plain-language editing guidance and Canvas installation steps.
 - Keyboard focus indicators, a skip link, semantic headings, responsive layouts and reduced-motion support.
 
